@@ -1,0 +1,26 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model attendance {
+  id           Int               @id @default(autoincrement())
+  userId       Int
+  date         DateTime          @db.DateTime(0)
+  inTime       DateTime?         @db.DateTime(0)
+  outTime      DateTime?         @db.DateTime(0)
+  status       attendance_status @default(Present)
+  workingHours Float?            @db.Float
+  createdOn    DateTime?         @default(now()) @db.DateTime(0)
+  updatedOn    DateTime?         @default(now()) @db.DateTime(0)
+}
+
+enum attendance_status {
+  Present
+  Absent
+  Leave
+}
